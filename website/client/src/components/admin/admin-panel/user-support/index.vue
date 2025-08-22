@@ -5,19 +5,25 @@
       class="row"
     >
       <div class="form col-12">
-                <button
-          class="btn btn-danger mt-3 float-right"
-          @click="confirmDeleteHero"
-        >
-          Begin Member deletion
-        </button>
+        <div class="btn-group float-right">
+          <button
+            class="btn btn-danger"
+            @click="confirmDeleteHero"
+          >
+            <span
+              v-once
+              class="svg-icon icon-16 mt-1 mb-1"
+              v-html="icons.deleteIcon"
+            ></span>
+          </button>
+        </div>
+
         <basic-details
           :user-id="hero._id"
           :auth="hero.auth"
           :preferences="hero.preferences"
           :profile="hero.profile"
         />
-        
 
         <privileges-and-gems
           :hero="hero"
@@ -202,6 +208,7 @@ import CustomizationsOwned from './customizationsOwned.vue';
 import Achievements from './achievements.vue';
 import UserHistory from './userHistory.vue';
 import Stats from './stats.vue';
+import deleteIcon from '@/assets/svg/delete.svg?raw';
 
 import { userStateMixin } from '../../../../mixins/userState';
 
@@ -240,6 +247,9 @@ export default {
       adminHasPrivForParty: true,
       deleteHabiticaAccount: true,
       deleteAmplitudeData: true,
+      icons: Object.freeze({
+        deleteIcon,
+      }),
     };
   },
   watch: {

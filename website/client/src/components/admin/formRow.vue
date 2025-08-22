@@ -1,43 +1,56 @@
 <template>
   <div class="form-group row">
     <label class="col-sm-3 col-form-label"><slot name="label">{{ label }}:</slot></label>
-    <div class="col-sm-9"
-      :class="editable ? 'editable' : 'col-form-label'">
+    <div
+      class="col-sm-9"
+      :class="editable ? 'editable' : 'col-form-label'"
+    >
       <slot>
         <div class="input-group">
-        <strong v-if="!editable">
-          {{ value || "---" }}
-        </strong>
-        <textarea
-          v-else-if="inputType === 'textarea'"
-          :value="value"
-          class="form-control"
-          :rows="rows"
-          @input="$emit('input', $event.target.value)"
-        ></textarea>
-        <input
-          v-else
-          :value="value"
-          class="form-control"
-          :type="inputType"
-          @input="$emit('input', $event.target.value)"
-          :min="min"
-          :max="max"
-          :step="step"
-        >
-        <div class="input-group-append" v-if="suffix || $slots.suffix">
-          <slot name="suffix">
-            <strong class="input-group-text">
-              {{ suffix }}
-            </strong>
-          </slot>
+          <strong v-if="!editable">
+            {{ value || "---" }}
+          </strong>
+          <textarea
+            v-else-if="inputType === 'textarea'"
+            :value="value"
+            class="form-control"
+            :rows="rows"
+            @input="$emit('input', $event.target.value)"
+          ></textarea>
+          <input
+            v-else
+            :value="value"
+            class="form-control"
+            :type="inputType"
+            :min="min"
+            :max="max"
+            :step="step"
+            @input="$emit('input', $event.target.value)"
+          >
+          <div
+            v-if="suffix || $slots.suffix"
+            class="input-group-append"
+          >
+            <slot name="suffix">
+              <strong class="input-group-text">
+                {{ suffix }}
+              </strong>
+            </slot>
+          </div>
         </div>
-      </div>
       </slot>
-      <div class="form-text text-muted" v-if="helpText || $slots.helpText">
-        <slot name="helpText">{{ helpText }}</slot>
+      <div
+        v-if="helpText || $slots.helpText"
+        class="form-text text-muted"
+      >
+        <slot name="helpText">
+          {{ helpText }}
+        </slot>
       </div>
-      <div class="form-text text-muted mt-1" v-if="$slots.subtitle">
+      <div
+        v-if="$slots.subtitle"
+        class="form-text text-muted mt-1"
+      >
         <slot name="subtitle"></slot>
       </div>
     </div>
@@ -60,8 +73,7 @@
 </style>
 
 <script>
-import { max } from 'lodash';
-import { min } from 'lodash';
+import { max, min } from 'lodash';
 
 export default {
   model: {
@@ -95,20 +107,20 @@ export default {
     min: {
       type: [Number, String],
       default: 0,
-      validator(value) {
+      validator (value) {
         return !isNaN(value) && min([value, 0]) === 0;
       },
     },
     max: {
       type: [Number, String],
-      validator(value) {
+      validator (value) {
         return !isNaN(value) && max([value, 100]) === 100;
       },
     },
     step: {
       type: [Number, String],
       default: 1,
-      validator(value) {
+      validator (value) {
         return !isNaN(value) && min([value, 1]) === 1;
       },
     },

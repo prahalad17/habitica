@@ -341,15 +341,15 @@ export default {
       expand: false,
     };
   },
+  computed: {
+    userIsPartyLeader () {
+      return this.groupPartyData.leader === this.userId;
+    },
+  },
   watch: {
     resetCounter () {
       resetData(this);
     },
-  },
-  computed: {
-    userIsPartyLeader () {
-      return this.groupPartyData.leader === this.userId;
-    }
   },
   mounted () {
     resetData(this);
@@ -363,11 +363,13 @@ export default {
       });
     },
     async makePartyLeader () {
-      await this.$store.dispatch('guilds:update', { group: {
-        id: this.groupPartyData._id,
-        leader: this.userId,
-      } });
-    }
+      await this.$store.dispatch('guilds:update', {
+        group: {
+          id: this.groupPartyData._id,
+          leader: this.userId,
+        },
+      });
+    },
   },
 };
 </script>

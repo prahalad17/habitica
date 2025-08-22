@@ -3,32 +3,37 @@
     <h2>{{ group.name }}</h2>
     <router-link
       v-if="isGroupPlan"
-      :to="{'name': 'groupPlanDetail', 'params': {'groupId': groupId}}">
+      :to="{'name': 'groupPlanDetail', 'params': {'groupId': groupId}}"
+    >
       Group Plan Page
     </router-link>
-    
+
     <supportContainer
       :title="$t('groupData')"
-        :onSave="updateGroup">
+      :on-save="updateGroup"
+    >
       <groupData
         :group="group"
       />
     </supportContainer>
     <supportContainer
-      :title="$t('groupPlanSubscription')">
+      :title="$t('groupPlanSubscription')"
+    >
       <groupPlan
         :group="group"
       />
     </supportContainer>
     <supportContainer
       v-if="group.type === 'party'"
-      :title="$t('questDetails')">
+      :title="$t('questDetails')"
+    >
       <quest
         :group="group"
       />
-      </supportContainer>
+    </supportContainer>
     <supportContainer
-      :title="$t('members')">
+      :title="$t('members')"
+    >
       <members
         :group="group"
       />
@@ -59,14 +64,6 @@ export default {
       group: {},
     };
   },
-  watch: {
-    groupId () {
-      this.loadGroup(this.groupId);
-    },
-  },
-  mounted () {
-    this.groupId = this.$route.params.groupId;
-  },
   computed: {
     isGroupPlan () {
       return this.group
@@ -75,6 +72,14 @@ export default {
         && this.group.purchased.plan.planId;
     },
   },
+  watch: {
+    groupId () {
+      this.loadGroup(this.groupId);
+    },
+  },
+  mounted () {
+    this.groupId = this.$route.params.groupId;
+  },
   methods: {
     clearData () {
       this.group = {};
@@ -82,17 +87,16 @@ export default {
     async loadGroup (groupId) {
       this.$emit('changeGroupId', groupId);
       this.group = await this.$store.dispatch('admin:getGroup', { groupId });
-
     },
     async updateGroup () {
       if (this.group && !this.group.id) {
         this.group.id = this.group._id || this.groupId; // Ensure group has an id property
       }
       await this.$store.dispatch('guilds:update', { group: this.group });
-      this.group = await this.$store.dispatch('admin:getGroup', { groupId: this.group.id })
+      this.group = await this.$store.dispatch('admin:getGroup', { groupId: this.group.id });
       await this.$store.dispatch('snackbars:add', {
         title: '',
-        text: `Group updated`,
+        text: 'Group updated',
         type: 'info',
       });
     },

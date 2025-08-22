@@ -136,8 +136,9 @@
           </div>
         </div>
         <formRow
+          v-model="hero.purchased.plan.customerId"
           label="Customer ID"
-          v-model="hero.purchased.plan.customerId" />
+        />
         <div
           v-if="hero.purchased.plan.planId === 'group_plan_auto'"
           class="form-group row"
@@ -188,19 +189,22 @@
           </div>
         </div>
         <formRow
-          label="Creation date"
           v-if="hero.purchased.plan.dateCreated"
           v-model="hero.purchased.plan.dateCreated"
-          :suffix="dateFormat(hero.purchased.plan.dateCreated)" />
+          label="Creation date"
+          :suffix="dateFormat(hero.purchased.plan.dateCreated)"
+        />
         <formRow
-          label="Current sub start date"
           v-if="hero.purchased.plan.dateCurrentTypeCreated"
           v-model="hero.purchased.plan.dateCurrentTypeCreated"
-          :suffix="dateFormat(hero.purchased.plan.dateCurrentTypeCreated)" />
+          label="Current sub start date"
+          :suffix="dateFormat(hero.purchased.plan.dateCurrentTypeCreated)"
+        />
         <formRow
-          label="Termination date"
           v-model="hero.purchased.plan.dateTerminated"
-          :suffix="dateFormat(hero.purchased.plan.dateTerminated)">
+          label="Termination date"
+          :suffix="dateFormat(hero.purchased.plan.dateTerminated)"
+        >
           <template #suffix>
             <strong class="input-group-text">
               {{ dateFormat(hero.purchased.plan.dateTerminated) }}
@@ -214,23 +218,31 @@
               Terminate
             </a>
           </template>
-          <template #helpText v-if="isSubscribed() && !isCancelled()">
+          <template
+            v-if="isSubscribed() && !isCancelled()"
+            #helpText
+          >
             <span class="text-success">
               The subscription does not have a termination date and is active.
             </span>
           </template>
         </formRow>
         <formRow
-          label="Cumulative months"
           v-model="hero.purchased.plan.cumulativeCount"
-          inputType="number"
-          helpText="Cumulative subscribed months across subscription periods." />
+          label="Cumulative months"
+          input-type="number"
+          help-text="Cumulative subscribed months across subscription periods."
+        />
         <formRow
-          label="Extra months"
           v-model="hero.purchased.plan.extraMonths"
-          inputType="number"
-          helpText="Additional credit that is applied if a subscription is cancelled.">
-          <template #suffix v-if="hero.purchased.plan.dateTerminated && hero.purchased.plan.extraMonths > 0">
+          label="Extra months"
+          input-type="number"
+          help-text="Additional credit that is applied if a subscription is cancelled."
+        >
+          <template
+            v-if="hero.purchased.plan.dateTerminated && hero.purchased.plan.extraMonths > 0"
+            #suffix
+          >
             <a
               class="btn btn-warning"
               @click="applyExtraMonths"
@@ -240,21 +252,24 @@
           </template>
         </formRow>
         <formRow
-          label="Received hourglass bonus"
           v-model="hero.purchased.plan.hourglassPromoReceived"
-          :suffix="dateFormat(hero.purchased.plan.hourglassPromoReceived)" />
+          label="Received hourglass bonus"
+          :suffix="dateFormat(hero.purchased.plan.hourglassPromoReceived)"
+        />
         <formRow
-          label="Mystic Hourglasses"
           v-model="hero.purchased.plan.consecutive.trinkets"
-          inputType="number"
-          min="0" />
+          label="Mystic Hourglasses"
+          input-type="number"
+          min="0"
+        />
         <formRow
-          label="Gem cap increase"
           v-model="hero.purchased.plan.consecutive.gemCapExtra"
-          inputType="number"
+          label="Gem cap increase"
+          input-type="number"
           min="0"
           max="26"
-          step="2" />
+          step="2"
+        />
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">
             Total Gem cap:
@@ -264,11 +279,12 @@
           </strong>
         </div>
         <formRow
-          label="Gems bought this month"
           v-model="hero.purchased.plan.gemsBought"
-          inputType="number"
+          label="Gems bought this month"
+          input-type="number"
           min="0"
-              :max="hero.purchased.plan.consecutive.gemCapExtra + 24" />
+          :max="hero.purchased.plan.consecutive.gemCapExtra + 24"
+        />
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">
             Mystery Items:
@@ -601,8 +617,8 @@ export default {
       return `${PLAY_CONSOLE_ORDERS_BASE_URL}${this.paymentDetails?.transactionId || ''}`;
     },
     isGroupPlanMember () {
-      return this.hero.purchased.plan.planId === 'group_plan_auto'
-    }
+      return this.hero.purchased.plan.planId === 'group_plan_auto';
+    },
   },
   methods: {
     dateFormat (date) {

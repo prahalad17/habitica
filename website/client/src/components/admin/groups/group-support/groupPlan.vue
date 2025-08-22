@@ -1,26 +1,31 @@
 <template>
-    <div v-if="group.purchased.plan">
+  <div v-if="group.purchased.plan">
     <form-row
-      label="Payment Method"
       v-model="group.purchased.plan.paymentMethod"
-      :editable="false" />
+      label="Payment Method"
+      :editable="false"
+    />
     <form-row
-      label="Plan ID"
       v-model="group.purchased.plan.planId"
-      :editable="false" />
+      label="Plan ID"
+      :editable="false"
+    />
     <form-row
-      label="Customer ID"
       v-model="group.purchased.plan.customerId"
-      :editable="false" />
+      label="Customer ID"
+      :editable="false"
+    />
     <form-row
-      label="Creation Date"
       v-model="group.purchased.plan.dateCreated"
-      :editable="false" />
+      label="Creation Date"
+      :editable="false"
+    />
     <form-row
-      label="Termination Date"
       v-model="group.purchased.plan.dateTerminated"
-      :editable="false" />
-    </div>
+      label="Termination Date"
+      :editable="false"
+    />
+  </div>
 </template>
 
 <script>
